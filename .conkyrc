@@ -91,10 +91,14 @@ ${fs_bar /home}
 
 ${font Ubuntu:bold:size=10}${execpi 10 ~/.pingtest.sh 8.8.8.8}${hr 2}
 ${font sans-serif:normal:size=8}Local IPs:${alignr}External IP:
-${execi 1000 ip a | grep inet | grep -vw lo | grep -v inet6 | cut -d \/ -f1 | sed 's/[^0-9\.]*//g'}  ${alignr}${execi 1000  wget -q -O- https://api.ipify.org/; echo}
-${font sans-serif:normal:size=8}Down: ${downspeed wlp3s0}  ${alignr}Up: ${upspeed wlp3s0} 
-${font sans-serif:normal:size=8}Down Total: ${totaldown wlp3s0}  ${alignr}Up Total: ${totalup wlp3s0} 
+${execi 1000 ip a | grep inet | grep -vw lo | grep -v inet6 | cut -d \/ -f1 | sed 's/[^0-9\.]*//g'}  ${alignr}${execi 1000  wget -q -O- https://api.i$
+${if_up wlp3s0}${font sans-serif:normal:size=8}Down:${downspeed wlp3s0}${alignr}Up: ${upspeed wlp3s0}
+${font sans-serif:normal:size=8}Down Total: ${totaldown wlp3s0}  ${alignr}Up Total: ${totalup wlp3s0}
 ${color yellow}${downspeedgraph wlp3s0 50,130 } ${alignr}${color red} ${upspeedgraph wlp3s0 50,130 }$color
+${else}${if_up enp2s0f2}${font sans-serif:normal:size=8}Down:${downspeed enp2s0f2}${alignr}Up: ${upspeed enp2s0f2}
+${font sans-serif:normal:size=8}Down Total: ${totaldown enp2s0f2}  ${alignr}Up Total: ${totalup enp2s0f2}
+${color yellow}${downspeedgraph enp2s0f2 50,130 } ${alignr}${color red} ${upspeedgraph enp2s0f2 50,130 }$color
+
 ${font sans-serif:bold:size=10}TOP PROCESSES ${hr 2}
 ${font sans-serif:normal:size=8}Name $alignr PID   CPU%   MEM%${font sans-serif:normal:size=8}
 ${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
